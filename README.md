@@ -52,13 +52,14 @@ This is the entry point of the application. It initializes the GUI, sets up the 
 4. **Timer Management:** The system uses timers to manage the landing and movement of planes. If the landing is interrupted, the plane’s status reverts to its previous state, and the simulation continues.
 
 ## 📁 Project Structure
-├── Main.java                        # Your main method
-├── airplane.java                    # Airplane class (simulation logic)
+
+├── Main.java                        # main method
+├── airplane.java                    # Airplane class / airplane simulation logic
 ├── States.java                      # Contains E_Countries and E_AirplaneState enums
 ├── Time.java                        # Handles stopwatch/clock logic
-├── Countries_runway_gateway_status.java  # For status tracking
+├── Countries_runway_gateway_status.java  # For status tracking / Traffic control system
 └── GUI/
-    └── TextfieldProperties.java     # Your Swing GUI code
+    └── TextfieldProperties.java     # GUI code / Air traffic control tower
 
 ## How to Run
 
