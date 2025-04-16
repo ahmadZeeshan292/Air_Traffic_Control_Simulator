@@ -51,6 +51,15 @@ This is the entry point of the application. It initializes the GUI, sets up the 
 3. **Landing:** When a plane is about to land, it is given a 10-second timer to complete the process. If another plane enters the runway during this time, the first plane’s landing time is extended, and the second plane is prevented from landing until the runway is clear.
 4. **Timer Management:** The system uses timers to manage the landing and movement of planes. If the landing is interrupted, the plane’s status reverts to its previous state, and the simulation continues.
 
+## 📁 Project Structure
+├── Main.java                        # main method
+├── airplane.java                    # Airplane class (simulation logic)
+├── States.java                      # Contains E_Countries and E_AirplaneState enums
+├── Time.java                        # Handles stopwatch/clock logic
+├── Countries_runway_gateway_status.java  # For status tracking/ traffic control
+└── GUI/
+    └── TextfieldProperties.java     # Total interfaced code/ Airplane traffic control tower
+
 ## How to Run
 
 1. Clone the repository.
@@ -60,3 +69,4 @@ This is the entry point of the application. It initializes the GUI, sets up the 
 ```bash
 javac Main.java
 java Main
+
