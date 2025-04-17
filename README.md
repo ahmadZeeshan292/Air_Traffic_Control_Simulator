@@ -1,73 +1,71 @@
-# Air Traffic Control Simulation Project
+# ✈️ Airport Surface Traffic Control System
 
-This project is an air traffic control simulation using dynamic GUI (Graphical User Interface). The simulation allows multiple planes to be managed in the sky, and their landing and movements are controlled by timers.
+![Java](https://img.shields.io/badge/language-Java-blue.svg)
+![OOP](https://img.shields.io/badge/paradigm-OOP-orange.svg)
+![Lucidchart UML](https://img.shields.io/badge/UML-Lucidchart-blueviolet.svg)
 
-## Project Overview
+---
 
-The main objective of the project is to simulate the behavior of planes in an air traffic control system, where multiple planes can be in the sky at the same time, and the traffic control is managed via a timer for each plane. 
+## 📑 Table of Contents
 
-### Key Features:
-- **Multiple Planes:** The system can handle multiple planes at once, each having its own behavior and state.
-- **Dynamic GUI:** The project has a graphical interface that updates in real-time, allowing users to visually track the planes.
-- **Timer-Based Control:** A timer is assigned to each plane, controlling actions such as movement, landing, and delays.
-- **Landing Process:** During landing, the plane requires 10 seconds to land. If another plane enters the runway, the landing time is extended, and the plane goes back to its previous state until it can resume landing.
+- [Abstract](#abstract)
+- [Implementation](#implementation)
+  - [Timer Class](#timer-class)
+  - [Airplane Class](#airplane-class)
+  - [Traffic Control Class](#traffic-control-class)
+  - [Greedy Algorithm Class](#greedy-algorithm-class)
+  - [Main Class](#main-class)
+- [UML Diagram](#uml-diagram)
+- [Project Highlights](#project-highlights)
+- [Authors](#authors)
 
-## Class Descriptions
+---
 
-### 1. `Plane`
-This class represents a single plane in the simulation. Each plane has its own properties, such as:
-- **ID:** A unique identifier for the plane.
-- **Position:** Represents the plane’s position (x, y).
-- **Status:** The current status of the plane (e.g., flying, landing, or landed).
-- **Landing Time:** Tracks the remaining time until the plane has landed.
+## 🧠 Abstract
 
-The `Plane` class is responsible for:
-- Managing the plane’s state (flying, landing, or landed).
-- Handling the timing logic for landing.
-- Interacting with other planes and the runway.
+The primary goal of this project was to develop an **airplane ground surface traffic control system** using the principles of **Object-Oriented Programming (OOP)**. The emphasis was not on merely achieving output but on producing a thoughtfully architected solution. Students were encouraged to develop a flexible, extensible codebase to meet the project’s complex requirements using OOP principles like **encapsulation**, **reusability**, and **abstraction**.
 
-### 2. `Runway`
-The `Runway` class is used to represent the runway where planes land. It ensures that:
-- Only one plane can land at a time.
-- If another plane enters the runway during landing, it causes a delay for the first plane and the system adjusts accordingly.
+---
 
-### 3. `FlightControlTower`
-This class acts as the central controller of the simulation. It:
-- Manages the timer and coordination of planes’ landing.
-- Ensures that planes interact appropriately when landing, adjusting the landing times and handling runway occupation.
+## 🛠️ Implementation
 
-### 4. `AirplaneGUI`
-This class provides the graphical user interface for the project. It is responsible for:
-- Displaying the planes’ positions and statuses on the screen.
-- Allowing the user to interact with the planes, such as initiating landing procedures or simulating movements.
+To implement this system, we first understood the problem demands: tracking aircraft, managing their routes, optimizing paths, and coordinating safe landings while avoiding collisions. Below is a breakdown of each major class and its function in the solution.
 
-### 5. `Main`
-This is the entry point of the application. It initializes the GUI, sets up the flight control system, and starts the simulation. The `Main` class runs the main event loop and handles initialization of planes and runway states.
+---
 
-## How It Works
+### ⏱ Timer Class
 
-1. **Initial Setup:** When the simulation starts, the GUI is created, and the `FlightControlTower` is initialized.
-2. **Plane Movement:** Planes can be added dynamically to the simulation. Each plane moves according to its current state (flying, landing, or landed).
-3. **Landing:** When a plane is about to land, it is given a 10-second timer to complete the process. If another plane enters the runway during this time, the first plane’s landing time is extended, and the second plane is prevented from landing until the runway is clear.
-4. **Timer Management:** The system uses timers to manage the landing and movement of planes. If the landing is interrupted, the plane’s status reverts to its previous state, and the simulation continues.
+The `Timer` class serves two vital purposes:
+- **Global Clock:** Acts as the central clock around which the simulation runs.
+- **State Controller:** Tracks the airplane’s current state based on time, allowing the traffic control system to make decisions based on real-time aircraft positions.
 
-## 📁 Project Structure
+This functionality was critical in preventing collisions and managing timed transitions between states.
 
-├── Main.java                        # main method
-├── airplane.java                    # Airplane class / airplane simulation logic
-├── States.java                      # Contains E_Countries and E_AirplaneState enums
-├── Time.java                        # Handles stopwatch/clock logic
-├── Countries_runway_gateway_status.java  # For status tracking / Traffic control system
-└── GUI/
-    └── TextfieldProperties.java     # GUI code / Air traffic control tower
+---
 
-## How to Run
+### ✈️ Airplane Class
 
-1. Clone the repository.
-2. Navigate to the project directory.
-3. Compile and run the `Main` class.
+The `Airplane` class is the core of the system. It replicates key aircraft behaviors:
+- **Attributes:** Departure, destination, speed, status, and more.
+- **Integration with Timer:** Transitions aircraft states according to time intervals.
+- **Key Functions:**
 
-```bash
-javac Main.java
-java Main
+#### `planedistancetime(Countries_runway_gateway_status Status)`
 
+Determines when a plane should change its status based on predefined time intervals and current air/ground conditions. The function works closely with the traffic control system to ensure safe transitions.
+
+#### `calculate_shortest_path()`
+
+Uses the `greedy_alg` class to compute the most efficient route between origin and destination using weighted costs. If no valid path exists, the airplane remains grounded.
+
+#### States Enum:
+```java
+enum E_AirplaneState {
+  Grounded,
+  Destination_runway,
+  Destination_gateway,
+  Departure_runway,
+  Departure_gateway,
+  Mid_air,
+  Descending
+}
