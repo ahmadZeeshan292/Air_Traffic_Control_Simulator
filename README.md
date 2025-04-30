@@ -90,13 +90,22 @@ This ensures that test results are properly logged and tracked, and patients rec
 
 ---
 
-## 👨‍💻 Authors
+## 📁 Project Structure
 
-- **Ahmad Zeeshan** – Full Stack Developer  
-  [GitHub Profile](https://github.com/yourusername)
-
----
-
-## 📄 License
-
-This project is licensed under the **MIT License** – see the [LICENSE](LICENSE) file for details.
+``text
+db-project/
+├── public/
+│   └── Diagnostic_center/
+│       └── Medilab/
+│           ├── index.html              # Patient registration
+│           ├── result.html             # Patient report view
+│           └── technician_login.html   # Technician login
+├── routes/
+│   ├── patientRoutes.js
+│   └── technicianRoutes.js
+├── controllers/
+│   ├── patientController.js
+│   └── technicianController.js
+├── database/
+│   └── connection.js                   # SQL Server configuration
+└── app.js  
