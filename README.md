@@ -1,101 +1,125 @@
-# 🧪 Medilab: Web-Based Lab Test Management System
+# ✈️ Airport Surface Traffic Control System
 
-![Node.js](https://img.shields.io/badge/Node.js-Express-green.svg)  
-![SQL Server](https://img.shields.io/badge/Database-SQL--Server-blue.svg)  
-![JavaScript](https://img.shields.io/badge/Language-JavaScript-yellow.svg)  
-![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)  
-![Status](https://img.shields.io/badge/Status-Active-success.svg)
+![Java](https://img.shields.io/badge/language-Java-blue.svg)
+![OOP](https://img.shields.io/badge/paradigm-OOP-orange.svg)
+![Lucidchart UML](https://img.shields.io/badge/UML-Lucidchart-blueviolet.svg)
 
 ---
 
 ## 📑 Table of Contents
 
-- [🚀 Features](#-features)
-- [🔍 Detailed Analysis](#-detailed-analysis)
-  - [Patient Registration Form](#patient-registration-form)
-  - [Patient Report Display](#patient-report-display)
-  - [Technician Login Portal](#technician-login-portal)
-  - [Technician Workflow](#technician-workflow)
-- [🛠️ Future Enhancements](#️-future-enhancements)
-- [📥 Project Download](#-project-download)
+- [Abstract](#abstract)
+- [Implementation](#implementation)
+  - [Timer Class](#timer-class)
+  - [Airplane Class](#airplane-class)
+  - [Traffic Control Class](#traffic-control-class)
+  - [Greedy Algorithm Class](#greedy-algorithm-class)
+  - [Main Class](#main-class)
+- [UML Diagram](#uml-diagram)
+- [Project Highlights](#project-highlights)
+- [Authors](#authors)
 
 ---
 
-## 🚀 Features
+## 🧠 Abstract
 
-- ✅ **Automatic Appointment Booking**: The system automatically books appointments based on the availability of test kits.
-- ✅ **Dynamic Form Inputs**: The patient registration form dynamically disables irrelevant input fields based on selected tests.
-- ✅ **Technician Workflow**: Technicians can log in to access assigned appointments and enter test results, which are then stored in the database.
-- ✅ **Patient Report**: Reports are displayed to the patient only when they are marked as "Completed" by the technician.
-- ✅ **SQL Server Backend**: A fully integrated SQL Server database stores all patient, appointment, test, and technician-related data.
+The primary objective of this project was to develop an airport surface traffic control system using object-oriented programming principles. The focus was on designing a flexible and maintainable architecture using concepts such as encapsulation, abstraction, and reusability. Rather than simply producing output, the goal was to apply software engineering principles in solving real-world air traffic control problems involving conflict resolution and efficient routing.
 
 ---
 
-## 🔍 Detailed Analysis
+## 🛠️ Implementation
 
-### Patient Registration Form
+The project simulates air traffic on the ground, managing aircraft states, resolving collisions, and determining optimal routes. Each component plays a distinct role in achieving these tasks.
 
-The **Patient Registration Form** allows patients to sign up by entering their personal details, including name, age, contact information, and the tests they require. The form is designed to dynamically adjust based on the tests selected by the patient. For example, if a patient selects a COVID test, input fields related to COVID symptoms or travel history might become available. Once the form is submitted:
+---
 
-- A new record is created in the **Patients** table in the database.
-- An appointment is automatically booked for the patient if there are available test kits for the selected tests.
-- The patient's status is initially set as "Pending" in the appointment table.
+### ⏱ Timer Class
+
+The Timer class functions as a global clock that regulates the entire system. It tracks airplane positions over time and is crucial for determining aircraft status transitions. It also serves as the basis for the collision detection mechanism by helping the traffic control class understand where every plane is at any given moment.
+
+---
+
+### ✈️ Airplane Class
+
+The Airplane class is the centerpiece of the project. It holds all aircraft-related properties like departure, destination, speed, and status. It works in close composition with the Timer class to determine when and how an airplane should change its status. 
+
+Key functions include:
+
+- **planedistancetime** – This function handles airplane status transitions based on time intervals. It also checks with the traffic control class to ensure the next state can be safely entered.
   
-This form enhances the user experience by guiding patients through the registration process based on their needs.
+- **calculate_shortest_path** – This function determines the most efficient route between departure and destination using the greedy algorithm class.
+
+Airplane status can be one of the following:
+- Grounded
+- Departure Gateway
+- Departure Runway
+- Mid Air
+- Descending
+- Destination Runway
+- Destination Gateway
+
+These states help model the real-world journey of a plane on ground and in air.
 
 ---
 
-### Patient Report Display
+### 🚦 Traffic Control Class
 
-After a patient has completed their tests and the technician has entered the test results, the **Patient Report Display** shows the patient's test results. The report is accessible from a separate page (`result.html`) and only becomes available if the appointment status is marked as **Completed**.
+The traffic control system ensures that no two airplanes occupy the same taxiway or runway simultaneously. It tracks the status of each country’s runway and gateway using occupancy flags. If an airplane attempts to enter an occupied path, it is instructed to retain its current state.
 
-- If the test is complete, the form displays the test results, including the test name, result values, and a status of whether the patient passed or failed the test.
-- If the appointment is still in progress, a message is shown, informing the patient that the report is not ready yet.
+The system uses data structures that map each country to:
+- Runway Status (Occupied / Unoccupied)
+- Gateway Status (Occupied / Unoccupied)
+- Currently occupying airplane (if any)
 
-This feature ensures that patients only receive completed and accurate test results.
-
----
-
-### Technician Login Portal
-
-The **Technician Login Portal** allows technicians to log into the system using their credentials. After a successful login, they are redirected to a page where they can view a list of pending appointments.
-
-- Technicians can access details for each appointment, including the patient's information and the specific tests requested.
-- The system disables form fields for tests that are not included in the current appointment, preventing the technician from entering irrelevant data.
-  
-This portal is key for ensuring technicians only interact with the data they are assigned to, improving workflow efficiency and accuracy.
+This allows the system to safely manage airspace and taxi routes in a coordinated manner.
 
 ---
 
-### Technician Workflow
+### 🧮 Greedy Algorithm Class
 
-Once logged in, the **Technician Workflow** comes into play. Technicians can select an appointment, review the patient's information, and input test results into a form.
+This class is responsible for determining the shortest path between any two countries using Dijkstra's algorithm. The system is configured with a set of known connections between countries, each with a cost value. If a direct path does not exist, it calculates the best indirect path available.
 
-- Only the relevant tests for the current appointment are shown, based on the patient's request.
-- After entering the results, the technician can submit them to the database, updating the **Test Results** table.
-- Once all required tests have been completed, the **Appointment Status** is marked as "Completed," making the patient's report available for display.
+Example path setup:
+- NZ → Australia (cost: 500)
+- Australia → Europe (cost: 1000)
+- Europe → Iceland (cost: 300)
+- Pakistan → Australia (cost: 300)
+- Indonesia → Iceland (cost: 600)
 
-This ensures that test results are properly logged and tracked, and patients receive their reports only after all necessary tests have been processed.
-
----
-
-## 🛠️ Future Enhancements
-
-- 🧑‍💼 **Admin Panel**: Add an admin dashboard to manage inventory, users, and appointments.
-- ✉️ **SMS/Email Notifications**: Implement notifications for appointment confirmation and report readiness.
-- 🔐 **Role-Based Access Control**: Implement role-based access for Admin, Technician, and Patient.
-- 📱 **Responsive UI**: Improve the frontend to be fully responsive and accessible on mobile and tablet devices.
-- 📊 **Advanced Data Analytics**: Add an analytics dashboard to visualize lab test statistics, trends, and other key data.
+This helps ensure airplanes follow the most efficient routes possible.
 
 ---
 
-## 📥 Project Download
+### 🖥️ Main Class
 
-To download and run this project:
+This is where the full program comes together. It launches the GUI, sets up airplanes based on user input, and manages background threads for smooth simulation.
 
-1. [Download the ZIP file](link-to-your-zip-file) containing the full project.
-2. **Extract the contents** of the ZIP file to a directory of your choice.
-3. Follow the **Setup Instructions** to install dependencies and configure your database connection.
+**GUI Setup:**
+- The user is prompted to input departure and destination.
+- After input, a dynamic panel shows each airplane’s speed, current state, and clock in real time.
 
+**Threading:**
+- GUI refreshes every 3 seconds.
+- Airplane clocks and speed update every 1 second.
+- Proper thread control avoids stacking, which can lead to issues like seeing clock outputs such as: 1, 3, 7, 15...
 
- 
+The main class ensures smooth parallel updates and resolves concurrency issues to maintain system stability.
+
+---
+
+## 🧩 UML Diagram
+
+🔗 [Click here to view the UML Class Diagram on Lucidchart](https://lucid.app/lucidchart/2bbdbb34-8e03-4c6b-a953-9195f021a7cf/edit?viewport_loc=-2047%2C-1627%2C7140%2C3302%2CHWEp-vi-RSFO&invitationId=inv_6956009a-901f-403d-b440-7c6258423f85)
+
+---
+
+## 🚀 Project Highlights
+
+- ✅ Applied core OOP concepts: abstraction, encapsulation, and composition
+- ✅ Designed modular architecture for real-time traffic simulation
+- ✅ Real-time aircraft state transitions using timers
+- ✅ Collision detection and resolution logic
+- ✅ Shortest-path routing with Dijkstra’s algorithm
+- ✅ Dynamic Java GUI for real-time updates
+- ✅ Efficient multithreading and concurrency control
+
