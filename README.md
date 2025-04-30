@@ -17,8 +17,7 @@
   - [Technician Login Portal](#technician-login-portal)
   - [Technician Workflow](#technician-workflow)
 - [🛠️ Future Enhancements](#️-future-enhancements)
-- [👨‍💻 Authors](#-authors)
-- [📄 License](#-license)
+- [📥 Project Download](#-project-download)
 
 ---
 
@@ -90,22 +89,13 @@ This ensures that test results are properly logged and tracked, and patients rec
 
 ---
 
-## 📁 Project Structure
+## 📥 Project Download
 
-``text
-db-project/
-├── public/
-│   └── Diagnostic_center/
-│       └── Medilab/
-│           ├── index.html              # Patient registration
-│           ├── result.html             # Patient report view
-│           └── technician_login.html   # Technician login
-├── routes/
-│   ├── patientRoutes.js
-│   └── technicianRoutes.js
-├── controllers/
-│   ├── patientController.js
-│   └── technicianController.js
-├── database/
-│   └── connection.js                   # SQL Server configuration
-└── app.js  
+To download and run this project:
+
+1. [Download the ZIP file](link-to-your-zip-file) containing the full project.
+2. **Extract the contents** of the ZIP file to a directory of your choice.
+3. Follow the **Setup Instructions** to install dependencies and configure your database connection.
+
+
+ 
